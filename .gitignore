@@ -1,0 +1,32 @@
+# CMake
+cmake-build-*/
+CMakeLists.txt.user
+
+# CLion
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+main
+*.exe
+*.out
+
+# Test results and inputs
+Results_Test*.txt
+Test*.txt
+Test*.txtb
+
+# Log files
+*.log
+
+# Editor backup files
+*~
+*.swp
+*.swo
