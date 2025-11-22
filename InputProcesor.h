@@ -6,31 +6,25 @@
 #include <unordered_map>
 
 /**
- * @brief - struktura pro ulozeni a drzini vsech informci, ktere vytahneme ze vstupniho souboru
+ * @brief - struktura pro uchování všech dat ze vstupního souboru
+ * Slouží jako kontejner
  */
 struct InputDataExtracted {
-  int totalWord = 0;  // celkovy pocet slov, ktere jsme nasli v souboru
-  std::unordered_map<std::string, int> wordFrequency;  // zaznamenava pocet vyskytu urciteho slova -> frekvence
-  std::vector<std::string> wordsSentence;  // udrzi poradi slov jak sli v souboru za sebou
-  std::unordered_map<std::string, double> probabilityMap;  // pravdepodobnobnost vyskytu kazdeho slova
-  std::vector<std::pair<std::string, double>> sortedProbability;  // sezrazeny seznam slov a jejich poravdepodobnost -> od nejvetsiho po nejmensi
+  int totalWord = 0;  // celkový počet slov v textu
+  
+  std::unordered_map<std::string, int> wordFrequency; // (slovo, frekvence)
+
+  std::vector<std::string> wordsSentence; // všechna slova v pořadí
+
+  std::unordered_map<std::string, double> probabilityMap; // (slovo, pravdepodobnost)
+
+  std::vector<std::pair<std::string, double>> sortedProbability; // abecedne uspořádané (slovo, pravdepodobnost)
 };
 
 
-/**
- * @brief - zpracujeme vstupni soubor, vypocitame cetnost a pravdepodobnosti vsech slov
- * @param filename - cesta k souboru
- * @return processInputExtracted - struktura s nactenymi a vypocitanymi daty
-*/
 InputDataExtracted processInputExtracted(const std::string& filename);
 
-/**
- * @brief - sezadi slova podle frekvence a vypocíta jejich pravdepodobnest
- * vezme mapu frekvenci, spocita pravdep. a pak to seradí
- * @param freqMap - pocet vyskytu (bere to z InputDataEctracted::wordFrequency)
- * @param totalWords - celkovy pocet slov (bere to z InputDataEctracted::totalWord)
- * @return - std::vector<std::pair<std::string, double>> je to sezareny vektor dvojic -> slovo, pravdep.
- */
+
 std::vector<std::pair<std::string, double>> sortAndCalculateProbabilities(const std::unordered_map<std::string, int>& freqMap, int totalWords);
 
 #endif //INPUTPROCESOR_H

@@ -3,41 +3,33 @@
 
 #include "TreeBase.h"
 
+using namespace std;
+
 /**
- * @brief - uzel pro Binarni Vyhledavaci Strom
- * dedi se z BaseNode
+ * @brief - struktura reprezentující uzel BST
+ * Dědí všechny vlastnosti ze základní struktury BaseNode
  */
 struct BSTNode : public BaseNode {
-  // nepotrebuje zadne spocificke pole, protoze vzecho je definovane v BaseNode
 
   /**
-   * @brief - konstructor pro uzel BST
-   * @param w - slovo ulozene v uzlu
+   * @brief - konstruktor pro vytvoření nového uzlu BST
+   * @param w - slovo, které bude v uzlu uloženo
    */
-  BSTNode(const std::string& w);
+   BSTNode(const string& w);
 };
 
-/**
- * @brief - implementace BST
- * dedi veskeroui analytickou strukturu u BinaryTreeBase
- */
+
 class BST : public BinaryTreeBase<BSTNode> {
 private:
- BSTNode* insertRecursive(BSTNode* node, const std::string& word);
+  BSTNode* insertRecursive(BSTNode* node, const string& word);
 
 public:
- /**
-  * @brief - konstructor stromu
-  */
- BST();
+  /**
+   * @brief Konstruktor pro vytvoření prázdného BST stromu.
+   */
+  BST();
 
- // implementace vizualnich metod z BinaryTreeBAse
- /**
-  * @brief - vlozi nove slovo do BST
-  * BST vkladani - jetli je nemsi -> doleva / vetsi -> doprava
-  * @param word - slovo k vlozeni
-  */
- void insert(const std::string& word) override;
+  void insert(const string& word);
 
 };
 #endif //BST_H
