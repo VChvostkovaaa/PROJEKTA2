@@ -20,7 +20,7 @@ OPTNode::OPTNode(const std::string& word, double p) {
 /**
  * @brief - základní konstruktor pro celý OPT strom
  */
-OPT::OPT() : BinaryTreeBase<OPTNode>() {
+OPT::OPT() : BinaryTreeBase() {
     this -> N_size = 0; // na začátku je velikost 0
 }
 

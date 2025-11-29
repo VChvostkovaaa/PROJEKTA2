@@ -3,7 +3,7 @@
 
 #include "TreeBase.h"
 
-using namespace std;
+using std::string;
 
 /**
  * @brief - struktura reprezentující uzel BST
@@ -19,7 +19,7 @@ struct BSTNode : public BaseNode {
 };
 
 
-class BST : public BinaryTreeBase<BSTNode> {
+class BST : public BinaryTreeBase {
 private:
   BSTNode* insertRecursive(BSTNode* node, const string& word);
 

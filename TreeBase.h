@@ -7,7 +7,8 @@
 #include <algorithm> // Pro std::max
 #include <utility>   // Pro std::pair
 
-using namespace std;
+using std::string;
+using std::vector;
 
 struct InputDataExtracted;
 
@@ -28,14 +29,14 @@ struct BaseNode {
     virtual ~BaseNode() = default;
 };
 
-template<class TNode>
-int calculateHeightRecursive(TNode* node);
 
-template<class TNode>
-void setProbabilitiesRecursive(TNode* node, const unordered_map<string, double>& probMap);
+int calculateHeightRecursive(BaseNode* node);
 
-template<class TNode>
-double calculateAverageRecursive(TNode* node, int depth);
+
+void setProbabilitiesRecursive(BaseNode* node, const std::unordered_map<string, double>& probMap);
+
+
+double calculateAverageRecursive(BaseNode* node, int depth);
 
 
 /**
@@ -43,11 +44,11 @@ double calculateAverageRecursive(TNode* node, int depth);
  * Definuje společné rozhraní a sdílí kód pro analytické funkce
  * Použití šablony <class TNode> umožňuje této třídě pracovat s různými typy uzlů
 */
-template<class TNode>
+
 class BinaryTreeBase {
 protected:
     // každý strom má kořen, který je přístupný pro potomky
-    TNode* root;
+    BaseNode* root;
 
 public:
     // konstruktor vytvoří prázdný strom
@@ -60,7 +61,7 @@ public:
     }
 
     // pravdepodobnosti uzlu
-    void setProbabilities(const unordered_map<string, double>& probMap) {
+    void setProbabilities(const std::unordered_map<string, double>& probMap) {
         setProbabilitiesRecursive(root, probMap);
     }
 
@@ -84,59 +85,9 @@ public:
      * @brief - sestavení stromu najednou
      * Používá se pro OPT strom
      */
-    virtual void build(const vector<pair<string, double>>& data) {
+    virtual void build(const vector<std::pair<string, double>>& data) {
         (void)data; // prázdná implementace na nevyužitý parametr
     }
 };
-
-/**
- * @brief - rekurzivně počítá výšku stromu
- */
-template<class TNode>
-int calculateHeightRecursive(TNode* node) {
-    if (node == nullptr) {
-        return 0;
-    }
-    return 1 + std::max(calculateHeightRecursive((TNode*)(node -> left)),
-                        calculateHeightRecursive((TNode*)(node -> right)));
-}
-
-/**
- * @brief - rekurzivně prochází strom a nastavuje uzlům jejich pravděpodobnosti z mapy
- */
-template<class TNode>
-void setProbabilitiesRecursive(TNode* node, const unordered_map<string, double>& probMap) {
-    if (node == nullptr) {
-        return;
-    }
-    // najdeme pravděpodobnost pro slovo v aktuálním uzlu
-    auto it = probMap.find(node -> word);
-    if (it != probMap.end()) {
-        node->probability = it -> second;
-    }
-    // pokračujeme na potomky
-    setProbabilitiesRecursive((TNode*)(node -> left), probMap);
-    setProbabilitiesRecursive((TNode*)(node -> right), probMap);
-}
-
-/**
- * @brief - rekurzivně počítá průměrnou hloubku vyhledávání
- * Vzorec: suma(p_i * hloubka_i)
- */
-template<class TNode>
-double calculateAverageRecursive(TNode* node, int depth) {
-    if (node == nullptr) {
-        return 0.0;
-    }
-    // hloubka pro výpočet ceny
-    double c_i = (double)depth + 1.0;
-    // aktuální příspěvek do celkové ceny
-    double currentContribution = c_i * node -> probability;
-
-    // Celková cena stromu
-    return currentContribution
-           + calculateAverageRecursive((TNode*)(node -> left), depth + 1)
-           + calculateAverageRecursive((TNode*)(node -> right), depth + 1);
-}
 
 #endif //TREEBASE_H

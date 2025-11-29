@@ -9,17 +9,17 @@
  * @param word - slovo, které se má uložit
  */
 BSTNode::BSTNode(const std::string& word) {
-    this->word = word;
-    this->left = nullptr;
-    this->right = nullptr;
-    this->probability = 0.0;
-    // výška se pro  BST nepoužívá
+    this -> word = word;
+    this -> left = nullptr;
+    this -> right = nullptr;
+    this -> probability = 0.0;
+    // výška se pro BST nepoužívá
 }
 
 /**
  * @brief - konstuctor pro vytvoření prázdného BST
  */
-BST::BST() : BinaryTreeBase<BSTNode>() {
+BST::BST() : BinaryTreeBase() {
 }
 
 /**
@@ -28,8 +28,9 @@ BST::BST() : BinaryTreeBase<BSTNode>() {
   */
 void BST::insert(const std::string& word) {
     // nový kořen se uloží do 'root'
-    root = insertRecursive(root, word);
+    root = insertRecursive(static_cast<BSTNode*>(root), word);
 }
+
 /**
   * @brief - rekurzivní funkce pro vložení uzlu do BST
   * logika BST: menší -> doleva, větší -> doprava
@@ -45,9 +46,9 @@ BSTNode* BST::insertRecursive(BSTNode* node, const std::string& word) {
 
     // porovnáváme vkládané slovo se slovem v aktuálním uzlu
     if (word < node -> word) {
-        node -> left = insertRecursive((BSTNode*)(node -> left), word);
+        node -> left = insertRecursive(static_cast<BSTNode*>(node -> left), word);
     } else if (word > node -> word) {
-        node -> right = insertRecursive((BSTNode*)(node -> right), word);
+        node -> right = insertRecursive(static_cast<BSTNode*>(node -> right), word);
     }
 
     // vrátíme ukazatel na aktuální uzel

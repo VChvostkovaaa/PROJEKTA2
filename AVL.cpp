@@ -38,7 +38,7 @@ int getHeight(AVLNode *node) {
  */
 int getBalanceFactor(AVLNode* node) {
     if( node == nullptr ) return 0;
-    return getHeight((AVLNode *)(node -> left)) - getHeight((AVLNode *)(node -> right));
+    return getHeight(static_cast<AVLNode *>(node -> left)) - getHeight(static_cast<AVLNode *>(node -> right));
 }
 
 /**
@@ -48,7 +48,7 @@ int getBalanceFactor(AVLNode* node) {
  */
 void updateHeight(AVLNode* node) {
     if( node == nullptr ) return;
-    node -> height = 1 + std::max(getHeight((AVLNode *)(node -> left)), getHeight((AVLNode *)(node -> right)));
+    node -> height = 1 + std::max(getHeight(static_cast<AVLNode *>(node -> left)), getHeight(static_cast<AVLNode *>(node -> right)));
 }
 
 /**
@@ -59,9 +59,9 @@ void updateHeight(AVLNode* node) {
  */
 AVLNode* rotateRight(AVLNode* x) {
     // c se stane novým kořenem
-    AVLNode* c = (AVLNode *)(x -> left);
+    AVLNode* c = static_cast<AVLNode *>(x -> left);
     // t2 je pravý potomek c, který se přesune
-    AVLNode* t2 = (AVLNode*)(c -> right);
+    AVLNode* t2 = static_cast<AVLNode*>(c -> right);
 
     // provedení rotace
     c -> right = x;
@@ -83,9 +83,9 @@ AVLNode* rotateRight(AVLNode* x) {
  */
 AVLNode* rotateLeft(AVLNode* x){
     // c se stane novým kořenem
-    AVLNode* c = (AVLNode *)(x -> right);
+    AVLNode* c = static_cast<AVLNode *>(x -> right);
     // t2 je levý potomek c, který se přesune
-    AVLNode* t2 = (AVLNode*)(c -> left);
+    AVLNode* t2 = static_cast<AVLNode*>(c -> left);
 
     // provedení rotace
     c -> left = x;
@@ -111,9 +111,9 @@ AVLNode* balance(AVLNode* node) {
     // levý podstrom je vyššá
     if (bf > 1) {
         // LR
-        if (getBalanceFactor((AVLNode *)(node -> left)) < 0){
+        if (getBalanceFactor(static_cast<AVLNode *>(node -> left)) < 0){
             // ano -> levá rotace na levém potomkovi
-            node -> left = rotateLeft((AVLNode *)(node -> left));
+            node -> left = rotateLeft(static_cast<AVLNode *>(node -> left));
         }
         // potom pravá rotace
         return rotateRight(node);
@@ -122,9 +122,9 @@ AVLNode* balance(AVLNode* node) {
     // pravý podstrom je vyšší
     if (bf < -1) {
         // RL
-        if (getBalanceFactor((AVLNode *)(node -> right)) > 0) {
+        if (getBalanceFactor(static_cast<AVLNode *>(node -> right)) > 0) {
             // ano -> pravá rotace na pravém potomkovi
-            node -> right = rotateRight((AVLNode *)(node -> right));
+            node -> right = rotateRight(static_cast<AVLNode *>(node -> right));
         }
         // potom levá rotace
         return rotateLeft(node);
@@ -137,14 +137,14 @@ AVLNode* balance(AVLNode* node) {
 /**
  * @brief - konstruktor pro vytvoření prázdného AVL
  */
-AVL::AVL() : BinaryTreeBase<AVLNode>(){}
+AVL::AVL() : BinaryTreeBase(){}
 
 /**
   * @brief - metoda pro vložení nového slova do stromu
   * @param word - slovo, které se má vložit
   */
 void AVL::insert(const std::string &word) {
-    root = insertRecursive(root, word);
+    root = insertRecursive(static_cast<AVLNode*>(root), word);
 }
 
 /**
@@ -159,9 +159,9 @@ AVLNode *AVL::insertRecursive(AVLNode *node, const std::string &word) {
     }
 
     if(word < node->word){
-        node -> left = insertRecursive((AVLNode *)(node -> left), word);
+        node -> left = insertRecursive(static_cast<AVLNode *>(node -> left), word);
     } else if (word > node->word){
-        node -> right = insertRecursive((AVLNode *)(node -> right), word);
+        node -> right = insertRecursive(static_cast<AVLNode *>(node -> right), word);
     }
 
     // vyvážení uzlu po vložení

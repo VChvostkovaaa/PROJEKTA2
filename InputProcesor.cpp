@@ -59,7 +59,7 @@ bool compare(const std::pair<std::string, double>& a, const std::pair<std::strin
 
 
 /**
- * @brief pomocná funkce, která vezme mapu frekvencí a vytvoří z ní abecedně seřazený
+ * @brief - pomocná funkce, která vezme mapu frekvencí a vytvoří z ní abecedně seřazený
  * vektor -> slovo, pravděpodobnost
  * @param freqMap - mapa frekvencí slov
  * @param totalWords - celkový počet slov v textu

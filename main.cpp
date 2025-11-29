@@ -13,22 +13,20 @@
 #include "TreeBase.h"
 #include "InputProcesor.h"
 
-using namespace std;
+using std::string;
+using std::vector;
 
 /**
  * @brief - spusti analyzu pro BST a AVL stromy
  * vlozi data do stromu, nastavi pravdepodobnost a tiskne vysledky
- * @tparam TTree - typ stromu but BST / AVL
  * @param tree - strom ktery se ma analyzovat
  * @param data - vytazena data ze souboru (slovo, frekvence, pravdepodobnost)
  * @param treeName - je jmeno pro tisk BST / AVL
  */
-template <class TTree>
-void runTreeAnalysis(TTree& tree, const InputDataExtracted& data, const string& treeName) {
+void runTreeAnalysis(BinaryTreeBase& tree, const InputDataExtracted& data, const string& treeName) {
     cout << "\n--- " << treeName << " tree test ---" << endl;
     cout << "Building tree...done." << endl;
     // vkládáme slova, jak byla v pořadí v souboru
-     */
     for (const auto& word : data.wordsSentence) {
         tree.insert(word);
     }
@@ -76,18 +74,22 @@ void runOPTAnalysis(OPT& tree, const InputDataExtracted& data) {
 
 /**
  * @brief - hlavní funkce projektu. Zpracuje vstupní soubor, volá analyzační funkce a tiskne výsledky
- * @return 0 při úspěšném dokončení, 1 při chybě.
+ * @return 0 při úspěšném dokončení, 1 při chybě
  */
-int main() {
-    // desta k souboru
-    const string filename = "/Users/veronikachvostkova/CLionProjects/projektA2/Test4.txt";
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        cerr << "Usage: " << argv[0] << " <input_file_path>" << endl;
+        return 1;
+    }
+    // cesta k souboru
+    const string filename = argv[1];
 
     // zpracování vstupního souboru
     InputDataExtracted data = processInputExtracted(filename);
 
     // kontrola, zda máme nějaká data
     if (data.totalWord == 0) {
-        cerr << "Žádná data ke zpracování nebo chyba souboru." << endl;
+        cerr << "No words found in the input file or file is empty." << endl;
         return 1; // Chyba
     }
 
@@ -98,7 +100,6 @@ int main() {
 
     AVL myAVL;
     runTreeAnalysis(myAVL, data, "AVL");
-
     OPT myOPT;
     runOPTAnalysis(myOPT, data);
 

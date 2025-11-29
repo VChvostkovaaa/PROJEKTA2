@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "TreeBase.h"
 
-using namespace std;
+using std::string;
 
 /**
  *@brief - uzel pro AVL strom
@@ -34,7 +34,7 @@ AVLNode* rotateLeft(AVLNode* y);
 
 AVLNode* balance(AVLNode* node);
 
-class AVL : public BinaryTreeBase<AVLNode> {
+class AVL : public BinaryTreeBase {
 private:
  AVLNode* insertRecursive(AVLNode* node, const string& word);
 

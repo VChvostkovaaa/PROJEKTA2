@@ -3,14 +3,10 @@ project(projektA2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(projektA2 pocet_slov.cpp
+add_executable(projektA2
         BST.cpp
-        InputProcesor.h
         InputProcesor.cpp
-        BST.h
-        AVL.h
-        TreeBase.h
+        TreeBase.cpp
         AVL.cpp
-        OPT.h
         main.cpp
         opt.cpp)

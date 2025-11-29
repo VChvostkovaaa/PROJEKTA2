@@ -6,7 +6,8 @@
 #include <unordered_map>
 #include "TreeBase.h"
 
-using namespace std;
+using std::string;
+using std::vector;
 
 struct OPTNode : public BaseNode {
     /**
@@ -17,7 +18,7 @@ struct OPTNode : public BaseNode {
     OPTNode(const string& w, double p);
 };
 
-class OPT : public BinaryTreeBase<OPTNode> {
+class OPT : public BinaryTreeBase {
 private:
     vector<vector<double>> C; // Tabulka cen C[i][j]
     vector<vector<int>> Root; // Tabulka kořenů Root[i][j]
@@ -26,9 +27,9 @@ private:
 
     double sumProb(int i, int j);
 
-    void calculateDPTables(const vector<pair<string, double>>& data);
+    void calculateDPTables(const vector<std::pair<string, double>>& data);
 
-    OPTNode* buildTreeRecursive(int L, int R, const vector<pair<string, double>>& data);
+    OPTNode* buildTreeRecursive(int L, int R, const vector<std::pair<string, double>>& data);
 
 public:
     OPT();
@@ -36,7 +37,7 @@ public:
         (void)word;
     }
 
-    void build(const vector<pair<string, double>>& data);
+    void build(const vector<std::pair<string, double>>& data);
 
     double calculateAverageComparisons();
 };
